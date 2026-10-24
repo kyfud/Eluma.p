@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eluma Web Suite - All-in-One Free Web Utility Suite</title>
-    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer with quick copy, QR code generator with copy & download option, CSS shadow generator, unit converter, and more.">
+    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer with copy, QR code generator with copy & download, CSS shadow generator with instant copy, unit converter, and more.">
     <style>
         :root {
             --bg-color: #f8fafc;
@@ -204,7 +204,7 @@
 
         <div class="grid">
 
-            <!-- Tool 1: Text Analyzer & Converter (WITH COPY TEXT BUTTON) -->
+            <!-- Tool 1: Text Analyzer & Converter -->
             <div class="card">
                 <h2>📝 Text Analyzer & Converter</h2>
                 <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
@@ -240,7 +240,7 @@
                 <div id="imgResult"></div>
             </div>
 
-            <!-- Tool 4: QR Code Generator (WITH COPY & DOWNLOAD) -->
+            <!-- Tool 4: QR Code Generator -->
             <div class="card">
                 <h2>📱 QR Code Generator</h2>
                 <input type="text" id="qrInput" placeholder="Enter URL or Text">
@@ -257,7 +257,7 @@
                 <div class="result-box" id="qrStatus" style="display: none; text-align: center; font-weight: bold;"></div>
             </div>
 
-            <!-- Tool 5: CSS Shadow & Border Radius -->
+            <!-- Tool 5: CSS Shadow & Style Generator (WITH COPY BUTTON) -->
             <div class="card">
                 <h2>🎨 CSS Shadow & Style Generator</h2>
                 <label>Blur Radius: <span id="blurVal">10</span>px</label>
@@ -265,7 +265,9 @@
                 <label>Border Radius: <span id="radVal">8</span>px</label>
                 <input type="range" id="borderRadius" min="0" max="50" value="8" oninput="updateShadow()">
                 <div class="preview-box" id="shadowPreview" style="background: var(--primary);"></div>
-                <div class="result-box" id="cssResult">box-shadow: 0px 4px 10px rgba(0,0,0,0.3);</div>
+                <div class="result-box" id="cssResult">box-shadow: 0px 4px 10px rgba(0,0,0,0.3); border-radius: 8px;</div>
+                <button class="action-btn" onclick="copyCSSCode()">📋 Copy CSS Code</button>
+                <div class="result-box" id="cssCopyStatus" style="display: none; text-align: center; font-weight: bold; color: #16a34a;"></div>
             </div>
 
             <!-- Tool 6: Password Generator -->
@@ -438,7 +440,7 @@
             };
         }
 
-        // QR Code Generator with Copy & Download
+        // QR Code Generator
         function generateQR() {
             const val = document.getElementById('qrInput').value.trim();
             const canvas = document.getElementById('qrCanvas');
@@ -487,7 +489,7 @@
             link.click();
         }
 
-        // CSS Shadow Generator
+        // CSS Shadow Generator & Copy
         function updateShadow() {
             const blur = document.getElementById('shadowBlur').value;
             const radius = document.getElementById('borderRadius').value;
@@ -499,6 +501,21 @@
             box.style.boxShadow = `0px 4px ${blur}px rgba(0,0,0,0.3)`;
             box.style.borderRadius = `${radius}px`;
             document.getElementById('cssResult').innerText = cssText;
+        }
+
+        async function copyCSSCode() {
+            const cssText = document.getElementById('cssResult').innerText;
+            const statusBox = document.getElementById('cssCopyStatus');
+            try {
+                await navigator.clipboard.writeText(cssText);
+                statusBox.style.display = 'block';
+                statusBox.innerText = '✅ CSS Code Copied!';
+                setTimeout(() => { statusBox.style.display = 'none'; }, 3000);
+            } catch (err) {
+                statusBox.style.display = 'block';
+                statusBox.innerText = '✅ Copied!';
+                setTimeout(() => { statusBox.style.display = 'none'; }, 3000);
+            }
         }
 
         // Password Generator

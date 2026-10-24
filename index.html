@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Multi-Utility Web Suite</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .ad-banner {
+            background-color: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            text-align: center;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        textarea, input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result-box {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+    </style>
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Smart Utility Suite</h1>
+        <p>Your All-in-One Daily Online Tool</p>
+    </header>
+
+    <div class="container">
+        <!-- Top Ad Space -->
+        <div class="ad-banner">
+            <!-- PASTE MONETAG TOP AD CODE HERE -->
+            <span>Advertisement Banner Space</span>
+        </div>
+
+        <div class="grid">
+            <!-- Tool 1: Text Counter & Converter -->
+            <div class="card">
+                <h2>Text Analyzer & Converter</h2>
+                <textarea id="textInput" rows="4" placeholder="Type or paste text here..."></textarea>
+                <div>
+                    <strong>Words:</strong> <span id="wordCount">0</span> | 
+                    <strong>Characters:</strong> <span id="charCount">0</span>
+                </div>
+                <button onclick="convertCase('upper')">UPPERCASE</button>
+                <button onclick="convertCase('lower')">lowercase</button>
+                <button onclick="speakText()">🔊 Listen Text</button>
+            </div>
+
+            <!-- Tool 2: QR Code Generator -->
+            <div class="card">
+                <h2>QR Code Generator</h2>
+                <input type="text" id="qrInput" placeholder="Enter URL or Text">
+                <button onclick="generateQR()">Generate QR Code</button>
+                <div style="text-align: center; margin-top: 10px;">
+                    <canvas id="qrCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Tool 3: Password Generator -->
+            <div class="card">
+                <h2>Strong Password Generator</h2>
+                <label>Password Length: <span id="lengthVal">12</span></label>
+                <input type="range" id="passLength" min="6" max="32" value="12" oninput="document.getElementById('lengthVal').innerText = this.value">
+                <button onclick="generatePassword()">Generate Password</button>
+                <div class="result-box" id="passResult">Your password will appear here</div>
+            </div>
+
+            <!-- Tool 4: Color Picker & Code Generator -->
+            <div class="card">
+                <h2>Color Code Picker</h2>
+                <input type="color" id="colorPicker" value="#2563eb" onchange="updateColor()">
+                <div class="result-box" id="colorResult">Selected Color: #2563eb</div>
+            </div>
+        </div>
+
+        <!-- Bottom Ad Space -->
+        <div class="ad-banner">
+            <!-- PASTE MONETAG BOTTOM AD CODE HERE -->
+            <span>Advertisement Banner Space</span>
+        </div>
+    </div>
+
+    <script>
+        // Text Counter & Converter
+        const textInput = document.getElementById('textInput');
+        textInput.addEventListener('input', () => {
+            const text = textInput.value.trim();
+            document.getElementById('wordCount').innerText = text ? text.split(/\s+/).length : 0;
+            document.getElementById('charCount').innerText = textInput.value.length;
+        });
+
+        function convertCase(type) {
+            if (type === 'upper') textInput.value = textInput.value.toUpperCase();
+            if (type === 'lower') textInput.value = textInput.value.toLowerCase();
+        }
+
+        function speakText() {
+            if (textInput.value) {
+                const utterance = new SpeechSynthesisUtterance(textInput.value);
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // QR Code Generator
+        function generateQR() {
+            const val = document.getElementById('qrInput').value;
+            if (val) {
+                new QRious({
+                    element: document.getElementById('qrCanvas'),
+                    value: val,
+                    size: 150
+                });
+            }
+        }
+
+        // Password Generator
+        function generatePassword() {
+            const length = document.getElementById('passLength').value;
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+            let pass = "";
+            for (let i = 0; i < length; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passResult').innerText = pass;
+        }
+
+        // Color Picker
+        function updateColor() {
+            const color = document.getElementById('colorPicker').value;
+            document.getElementById('colorResult').innerText = `HEX: ${color}`;
+        }
+    </script>
+</body>
+</html>

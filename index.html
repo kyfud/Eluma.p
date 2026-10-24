@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eluma Tools - All-in-One Free Web Utility Suite</title>
-    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer, QR code generator, CSS shadow generator, unit converter, and more.">
+    <title>Eluma Web Suite - All-in-One Free Web Utility Suite</title>
+    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer, QR code generator with copy option, CSS shadow generator, unit converter, and more.">
     <style>
         :root {
             --bg-color: #f8fafc;
@@ -182,7 +182,7 @@
             margin-top: 40px;
         }
     </style>
-    <!-- External Libraries (CDN) -->
+    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 <body>
@@ -196,7 +196,7 @@
 
     <div class="container">
 
-        <!-- Top Monetag Ad Banner -->
+        <!-- Top Monetag Ad Banner Space -->
         <div class="ad-space">
             <!-- PASTE YOUR MONETAG TOP AD SCRIPT HERE -->
             <span>Advertisement Space (Monetag Top Banner)</span>
@@ -238,14 +238,21 @@
                 <div id="imgResult"></div>
             </div>
 
-            <!-- Tool 4: QR Code Generator -->
+            <!-- Tool 4: QR Code Generator (WITH COPY & DOWNLOAD) -->
             <div class="card">
                 <h2>📱 QR Code Generator</h2>
                 <input type="text" id="qrInput" placeholder="Enter URL or Text">
                 <button class="action-btn" onclick="generateQR()">Generate QR</button>
-                <div style="text-align: center; margin-top: 5px;">
-                    <canvas id="qrCanvas"></canvas>
+                
+                <div style="text-align: center; margin-top: 10px;">
+                    <canvas id="qrCanvas" style="display:none; margin: 0 auto;"></canvas>
                 </div>
+
+                <div class="btn-group" id="qrActionBtns" style="display: none; margin-top: 10px;">
+                    <button onclick="copyQRImage()">📋 Copy QR Image</button>
+                    <button onclick="downloadQR()">⬇️ Download QR</button>
+                </div>
+                <div class="result-box" id="qrStatus" style="display: none; text-align: center; font-weight: bold;"></div>
             </div>
 
             <!-- Tool 5: CSS Shadow & Border Radius -->
@@ -304,7 +311,7 @@
 
         </div>
 
-        <!-- Bottom Monetag Ad Banner -->
+        <!-- Bottom Monetag Ad Banner Space -->
         <div class="ad-space">
             <!-- PASTE YOUR MONETAG BOTTOM AD SCRIPT HERE -->
             <span>Advertisement Space (Monetag Bottom Banner)</span>
@@ -313,7 +320,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Eluma Suite. Free Online Tools. Hosted safely on GitHub Pages.</p>
+        <p>&copy; Eluma Suite. Free Online Tools. Hosted safely on GitHub Pages.</p>
     </footer>
 
     <script>
@@ -351,7 +358,7 @@
             }
         }
 
-        // Text Summarizer (Rule-based)
+        // Text Summarizer
         function summarizeText() {
             const text = document.getElementById('sumInput').value.trim();
             if (!text) return;
@@ -408,16 +415,53 @@
             };
         }
 
-        // QR Code Generator
+        // QR Code Generator with Copy & Download
         function generateQR() {
-            const val = document.getElementById('qrInput').value;
+            const val = document.getElementById('qrInput').value.trim();
+            const canvas = document.getElementById('qrCanvas');
+            const actionBtns = document.getElementById('qrActionBtns');
+            const statusBox = document.getElementById('qrStatus');
+
             if (val) {
                 new QRious({
-                    element: document.getElementById('qrCanvas'),
+                    element: canvas,
                     value: val,
-                    size: 140
+                    size: 180
                 });
+                canvas.style.display = 'block';
+                actionBtns.style.display = 'flex';
+                statusBox.style.display = 'none';
+            } else {
+                alert('Please enter some text or URL first!');
             }
+        }
+
+        async function copyQRImage() {
+            const canvas = document.getElementById('qrCanvas');
+            const statusBox = document.getElementById('qrStatus');
+
+            try {
+                canvas.toBlob(async (blob) => {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    await navigator.clipboard.write([item]);
+                    statusBox.style.display = 'block';
+                    statusBox.style.color = '#16a34a';
+                    statusBox.innerText = '✅ QR Code Image Copied to Clipboard!';
+                    setTimeout(() => { statusBox.style.display = 'none'; }, 3000);
+                });
+            } catch (err) {
+                statusBox.style.display = 'block';
+                statusBox.style.color = '#dc2626';
+                statusBox.innerText = '⚠️ Copy not supported on this browser. Use Download option.';
+            }
+        }
+
+        function downloadQR() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.download = 'qrcode.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
 
         // CSS Shadow Generator

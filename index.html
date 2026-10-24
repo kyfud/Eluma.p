@@ -1,9 +1,168 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eluma Tools            color: var(--text-muted);
+    <title>Eluma Tools - All-in-One Free Web Utility Suite</title>
+    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer, QR code generator, CSS shadow generator, unit converter, and more.">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .ad-space {
+            background-color: var(--card-bg);
+            border: 1px dashed var(--border-color);
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea, input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group button, button.action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-group button:hover, button.action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         .preview-box {
@@ -40,7 +199,142 @@ DOCTYPE html>
         <!-- Top Monetag Ad Banner -->
         <div class="ad-space">
             <!-- PASTE YOUR MONETAG TOP AD SCRIPT HERE -->
- = Math.ceil(words / 200) + ' min';
+            <span>Advertisement Space (Monetag Top Banner)</span>
+        </div>
+
+        <div class="grid">
+
+            <!-- Tool 1: Text Analyzer & Converter -->
+            <div class="card">
+                <h2>📝 Text Analyzer & Converter</h2>
+                <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+                <div class="stats">
+                    <span>Words: <strong id="wordCount">0</strong></span>
+                    <span>Chars: <strong id="charCount">0</strong></span>
+                    <span>Read Time: <strong id="readTime">0 min</strong></span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="convertCase('upper')">UPPERCASE</button>
+                    <button onclick="convertCase('lower')">lowercase</button>
+                    <button onclick="speakText()">🔊 Listen</button>
+                </div>
+            </div>
+
+            <!-- Tool 2: AI Summarizer & Keywords -->
+            <div class="card">
+                <h2>⚡ Text Summarizer & Keywords</h2>
+                <textarea id="sumInput" placeholder="Paste long article or paragraph..."></textarea>
+                <button class="action-btn" onclick="summarizeText()">Summarize & Extract</button>
+                <div class="result-box" id="sumResult">Summary and main keywords will show here...</div>
+            </div>
+
+            <!-- Tool 3: Image Compressor & Resizer -->
+            <div class="card">
+                <h2>🖼️ Image Compressor</h2>
+                <input type="file" id="imgInput" accept="image/*">
+                <label>Quality: <span id="qualVal">80</span>%</label>
+                <input type="range" id="imgQuality" min="10" max="100" value="80" oninput="document.getElementById('qualVal').innerText = this.value">
+                <button class="action-btn" onclick="compressImage()">Compress Image</button>
+                <div id="imgResult"></div>
+            </div>
+
+            <!-- Tool 4: QR Code Generator -->
+            <div class="card">
+                <h2>📱 QR Code Generator</h2>
+                <input type="text" id="qrInput" placeholder="Enter URL or Text">
+                <button class="action-btn" onclick="generateQR()">Generate QR</button>
+                <div style="text-align: center; margin-top: 5px;">
+                    <canvas id="qrCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Tool 5: CSS Shadow & Border Radius -->
+            <div class="card">
+                <h2>🎨 CSS Shadow & Style Generator</h2>
+                <label>Blur Radius: <span id="blurVal">10</span>px</label>
+                <input type="range" id="shadowBlur" min="0" max="50" value="10" oninput="updateShadow()">
+                <label>Border Radius: <span id="radVal">8</span>px</label>
+                <input type="range" id="borderRadius" min="0" max="50" value="8" oninput="updateShadow()">
+                <div class="preview-box" id="shadowPreview" style="background: var(--primary);"></div>
+                <div class="result-box" id="cssResult">box-shadow: 0px 4px 10px rgba(0,0,0,0.3);</div>
+            </div>
+
+            <!-- Tool 6: Password Generator -->
+            <div class="card">
+                <h2>🔒 Secure Password Generator</h2>
+                <label>Length: <span id="passLenVal">14</span></label>
+                <input type="range" id="passLength" min="6" max="32" value="14" oninput="document.getElementById('passLenVal').innerText = this.value">
+                <button class="action-btn" onclick="generatePassword()">Generate Password</button>
+                <div class="result-box" id="passResult">Click generate to get password</div>
+            </div>
+
+            <!-- Tool 7: Age & Date Calculator -->
+            <div class="card">
+                <h2>📅 Age & Date Calculator</h2>
+                <label>Date of Birth:</label>
+                <input type="date" id="birthDate">
+                <button class="action-btn" onclick="calculateAge()">Calculate Age</button>
+                <div class="result-box" id="ageResult">Select birth date...</div>
+            </div>
+
+            <!-- Tool 8: Unit Converter -->
+            <div class="card">
+                <h2>🔄 Multi-Unit Converter</h2>
+                <input type="number" id="unitInput" placeholder="Enter value" value="1">
+                <select id="unitType" onchange="convertUnits()">
+                    <option value="mToFt">Meters to Feet</option>
+                    <option value="ftToM">Feet to Meters</option>
+                    <option value="kgToLb">Kg to Pounds</option>
+                    <option value="lbToKg">Pounds to Kg</option>
+                    <option value="cToF">Celsius to Fahrenheit</option>
+                </select>
+                <div class="result-box" id="unitResult">Result will appear here</div>
+            </div>
+
+            <!-- Tool 9: Encoder & Decoder -->
+            <div class="card">
+                <h2>🔤 Base64 / URL Encoder & Decoder</h2>
+                <textarea id="encodeInput" placeholder="Enter text to Encode/Decode..."></textarea>
+                <div class="btn-group">
+                    <button onclick="processCode('b64Enc')">Base64 Encode</button>
+                    <button onclick="processCode('b64Dec')">Base64 Decode</button>
+                </div>
+                <div class="result-box" id="encodeResult">Output string...</div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Monetag Ad Banner -->
+        <div class="ad-space">
+            <!-- PASTE YOUR MONETAG BOTTOM AD SCRIPT HERE -->
+            <span>Advertisement Space (Monetag Bottom Banner)</span>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Eluma Suite. Free Online Tools. Hosted safely on GitHub Pages.</p>
+    </footer>
+
+    <script>
+        // Theme Switcher
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        // Text Analyzer
+        const textInput = document.getElementById('textInput');
+        textInput.addEventListener('input', () => {
+            const text = textInput.value.trim();
+            const words = text ? text.split(/\s+/).filter(w => w.length > 0).length : 0;
+            document.getElementById('wordCount').innerText = words;
+            document.getElementById('charCount').innerText = textInput.value.length;
+            document.getElementById('readTime').innerText = Math.ceil(words / 200) + ' min';
         });
 
         function convertCase(type) {
@@ -50,8 +344,149 @@ DOCTYPE html>
         }
 
         function speakText() {
-             = 'Error: Invalid Input for Decoding';
+            if (textInput.value) {
+                window.speechSynthesis.cancel();
+                const speech = new SpeechSynthesisUtterance(textInput.value);
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        // Text Summarizer (Rule-based)
+        function summarizeText() {
+            const text = document.getElementById('sumInput').value.trim();
+            if (!text) return;
+            const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+            const summary = sentences.slice(0, Math.min(2, sentences.length)).join(' ');
+            
+            const words = text.toLowerCase().replace(/[^\w\s]/gi, '').split(/\s+/);
+            const freq = {};
+            words.forEach(w => { if(w.length > 3) freq[w] = (freq[w] || 0) + 1; });
+            const topKeywords = Object.keys(freq).sort((a,b) => freq[b] - freq[a]).slice(0, 5);
+
+            document.getElementById('sumResult').innerHTML = `
+                <strong>Summary:</strong> ${summary}<br><br>
+                <strong>Keywords:</strong> ${topKeywords.join(', ')}
+            `;
+        }
+
+        // Image Compressor
+        function compressImage() {
+            const fileInput = document.getElementById('imgInput');
+            const quality = document.getElementById('imgQuality').value / 100;
+            const resContainer = document.getElementById('imgResult');
+
+            if (!fileInput.files[0]) {
+                alert('Please select an image first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    canvas.toBlob((blob) => {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = `compressed_${file.name}`;
+                        link.innerText = `Download Compressed Image (${(blob.size / 1024).toFixed(1)} KB)`;
+                        link.style.display = 'block';
+                        link.style.marginTop = '10px';
+                        link.style.color = 'var(--primary)';
+                        resContainer.innerHTML = '';
+                        resContainer.appendChild(link);
+                    }, 'image/jpeg', quality);
+                };
+            };
+        }
+
+        // QR Code Generator
+        function generateQR() {
+            const val = document.getElementById('qrInput').value;
+            if (val) {
+                new QRious({
+                    element: document.getElementById('qrCanvas'),
+                    value: val,
+                    size: 140
+                });
+            }
+        }
+
+        // CSS Shadow Generator
+        function updateShadow() {
+            const blur = document.getElementById('shadowBlur').value;
+            const radius = document.getElementById('borderRadius').value;
+            document.getElementById('blurVal').innerText = blur;
+            document.getElementById('radVal').innerText = radius;
+
+            const box = document.getElementById('shadowPreview');
+            const cssText = `box-shadow: 0px 4px ${blur}px rgba(0,0,0,0.3); border-radius: ${radius}px;`;
+            box.style.boxShadow = `0px 4px ${blur}px rgba(0,0,0,0.3)`;
+            box.style.borderRadius = `${radius}px`;
+            document.getElementById('cssResult').innerText = cssText;
+        }
+
+        // Password Generator
+        function generatePassword() {
+            const len = document.getElementById('passLength').value;
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=";
+            let res = "";
+            for (let i = 0; i < len; i++) {
+                res += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passResult').innerText = res;
+        }
+
+        // Age Calculator
+        function calculateAge() {
+            const val = document.getElementById('birthDate').value;
+            if (!val) return;
+            const birth = new Date(val);
+            const now = new Date();
+            let years = now.getFullYear() - birth.getFullYear();
+            let months = now.getMonth() - birth.getMonth();
+            if (months < 0 || (months === 0 && now.getDate() < birth.getDate())) {
+                years--;
+                months += 12;
+            }
+            document.getElementById('ageResult').innerText = `You are ${years} years and ${months} months old.`;
+        }
+
+        // Unit Converter
+        function convertUnits() {
+            const val = parseFloat(document.getElementById('unitInput').value) || 0;
+            const type = document.getElementById('unitType').value;
+            let res = 0;
+
+            if (type === 'mToFt') res = (val * 3.28084).toFixed(2) + ' Feet';
+            if (type === 'ftToM') res = (val / 3.28084).toFixed(2) + ' Meters';
+            if (type === 'kgToLb') res = (val * 2.20462).toFixed(2) + ' Lbs';
+            if (type === 'lbToKg') res = (val / 2.20462).toFixed(2) + ' Kg';
+            if (type === 'cToF') res = ((val * 9/5) + 32).toFixed(2) + ' °F';
+
+            document.getElementById('unitResult').innerText = `Result: ${res}`;
+        }
+        document.getElementById('unitInput').addEventListener('input', convertUnits);
+
+        // Encoder / Decoder
+        function processCode(action) {
+            const val = document.getElementById('encodeInput').value;
+            const resBox = document.getElementById('encodeResult');
+            try {
+                if (action === 'b64Enc') resBox.innerText = btoa(val);
+                if (action === 'b64Dec') resBox.innerText = atob(val);
+            } catch (e) {
+                resBox.innerText = 'Error: Invalid Input for Decoding';
             }
         }
     </script>
 </body>
+</html>

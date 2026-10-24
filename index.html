@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eluma Web Suite - All-in-One Free Web Utility Suite</title>
-    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer, QR code generator with copy option, CSS shadow generator, unit converter, and more.">
+    <meta name="description" content="Free online smart utility tools including image compressor, text analyzer with quick copy, QR code generator with copy & download option, CSS shadow generator, unit converter, and more.">
     <style>
         :root {
             --bg-color: #f8fafc;
@@ -204,7 +204,7 @@
 
         <div class="grid">
 
-            <!-- Tool 1: Text Analyzer & Converter -->
+            <!-- Tool 1: Text Analyzer & Converter (WITH COPY TEXT BUTTON) -->
             <div class="card">
                 <h2>📝 Text Analyzer & Converter</h2>
                 <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
@@ -216,8 +216,10 @@
                 <div class="btn-group">
                     <button onclick="convertCase('upper')">UPPERCASE</button>
                     <button onclick="convertCase('lower')">lowercase</button>
+                    <button onclick="copyAnalyzerText()">📋 Copy Text</button>
                     <button onclick="speakText()">🔊 Listen</button>
                 </div>
+                <div class="result-box" id="textCopyStatus" style="display: none; text-align: center; font-weight: bold; color: #16a34a;"></div>
             </div>
 
             <!-- Tool 2: AI Summarizer & Keywords -->
@@ -334,7 +336,7 @@
             }
         }
 
-        // Text Analyzer
+        // Text Analyzer & Converter
         const textInput = document.getElementById('textInput');
         textInput.addEventListener('input', () => {
             const text = textInput.value.trim();
@@ -348,6 +350,27 @@
             if (type === 'upper') textInput.value = textInput.value.toUpperCase();
             if (type === 'lower') textInput.value = textInput.value.toLowerCase();
             textInput.dispatchEvent(new Event('input'));
+        }
+
+        async function copyAnalyzerText() {
+            const text = textInput.value;
+            const statusBox = document.getElementById('textCopyStatus');
+            if (!text) {
+                alert('Text area is empty!');
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(text);
+                statusBox.style.display = 'block';
+                statusBox.innerText = '✅ Text Copied to Clipboard!';
+                setTimeout(() => { statusBox.style.display = 'none'; }, 3000);
+            } catch (err) {
+                textInput.select();
+                document.execCommand('copy');
+                statusBox.style.display = 'block';
+                statusBox.innerText = '✅ Text Copied!';
+                setTimeout(() => { statusBox.style.display = 'none'; }, 3000);
+            }
         }
 
         function speakText() {
